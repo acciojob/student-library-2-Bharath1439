@@ -41,9 +41,15 @@ public class Transaction {
     @CreationTimestamp
     private Date transactionDate;
 
-    public Transaction(int id, String transactionId) {
-        this.id = id;
+    public Transaction(String transactionId, Card card, Book book, int fineAmount,
+                       boolean isIssueOperation, TransactionStatus transactionStatus, Date transactionDate) {
         this.transactionId = transactionId;
+        this.card = card;
+        this.book = book;
+        this.fineAmount = fineAmount;
+        this.isIssueOperation = isIssueOperation;
+        this.transactionStatus = transactionStatus;
+        this.transactionDate = transactionDate;
     }
 
     public int getId() {

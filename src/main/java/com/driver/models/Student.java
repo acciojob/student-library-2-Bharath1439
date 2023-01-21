@@ -14,14 +14,11 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    public Student(int id, String emailId, String name, int age, String country) {
-        this.id = id;
+    public Student(String emailId, String name, int age, String country) {
         this.emailId = emailId;
         this.name = name;
         this.age = age;
         this.country = country;
-
-
     }
 
     @Column(unique = true)
