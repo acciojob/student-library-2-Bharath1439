@@ -11,6 +11,7 @@ import java.util.List;
 
 //Add required annotations
 @RestController
+@RequestMapping("/Book")
 public class BookController {
 
 

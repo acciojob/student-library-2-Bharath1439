@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 //Add required annotations
 
 @RestController
+@RequestMapping("/Transaction")
 public class TransactionController {
 
     //Add required annotations

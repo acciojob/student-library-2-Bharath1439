@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TransactionService {
@@ -88,10 +90,29 @@ public class TransactionService {
         //for the given transaction calculate the fine amount considering the book has been returned exactly when this function is called
         //make the book available for other users
         //make a new transaction for return book which contains the fine amount as well
+        Date issueDate= transaction.getTransactionDate();
+
+        long timeIssuetime = Math.abs(System.currentTimeMillis() - ((Date) issueDate).getTime());
+
+        long no_of_days_passed = TimeUnit.DAYS.convert(timeIssuetime, TimeUnit.MILLISECONDS);
+
+        int fine = 0;
+        if(no_of_days_passed > getMax_allowed_days){
+            fine = (int)((no_of_days_passed - getMax_allowed_days) * fine_per_day);}
+        Book book=transaction.getBook();
+        book.setAvailable(true);
+        book.setCard(null);
+        bookRepository5.updateBook(book);
+        Transaction transaction1=new Transaction();
+        transaction1.setIssueOperation(false);
+        transaction1.setFineAmount(fine);
+        transaction1.setBook(book);
+        transaction1.setCard(transaction.getCard());
+        transaction1.setTransactionStatus(TransactionStatus.SUCCESSFUL);
+        transactionRepository5.save(transaction1);
 
 
-
-        Transaction returnBookTransaction  = null;
+        Transaction returnBookTransaction  = transaction1;
         return returnBookTransaction; //return the transaction after updating all details
     }
 }
